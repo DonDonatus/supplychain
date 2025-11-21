@@ -54,24 +54,24 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Clients Heading */}
           <div className="text-center mb-12">
-            <h2 className="text-xl md:text-2xl font-medium text-gray-900">
+            <p className="text-lg md:text-sm font-medium text-gray-900">
               Over <span className="text-brand-orange">100+ clients</span> All over the World
-            </h2>
+            </p>
           </div>
 
           {/* Client Logos Grid */}
           <div className="flex items-center justify-center gap-16 md:gap-24 lg:gap-32 mb-20">
             <div className="flex items-center justify-center">
-              <Image src="/logo/nasa-logo.svg" alt="NASA" width={60} height={60} className="h-12 w-auto object-contain" />
+              <Image src="/logo/nasa-logo.svg" alt="NASA" width={100} height={100} className="h-16 w-auto object-contain" />
             </div>
             <div className="flex items-center justify-center">
-              <Image src="/logo/ustc.png" alt="USTC" width={60} height={60} className="h-12 w-auto object-contain" />
+              <Image src="/logo/ustc.png" alt="USTC" width={100} height={100} className="h-16 w-auto object-contain" />
             </div>
             <div className="flex items-center justify-center">
-              <Image src="/logo/airforce.png" alt="Air Force" width={60} height={60} className="h-12 w-auto object-contain" />
+              <Image src="/logo/airforce.png" alt="Air Force" width={100} height={100} className="h-16 w-auto object-contain" />
             </div>
             <div className="flex items-center justify-center">
-              <Image src="/logo/mda.png" alt="MDA" width={60} height={60} className="h-12 w-auto object-contain" />
+              <Image src="/logo/mda.png" alt="MDA" width={100} height={100} className="h-16 w-auto object-contain" />
             </div>
           </div>
 
@@ -223,7 +223,7 @@ export default function Home() {
             </div>
 
             {/* Right Column - Content Card */}
-            <div className="bg-white p-8 rounded-xl shadow-sm">
+            <div className="bg-white p-9 rounded-xl shadow-sm">
               <p className="text-gray-900 text-base md:text-lg leading-relaxed mb-6">
                 Our <span className="text-brand-orange font-semibold">experts</span> are{' '}
                 <span className="text-brand-orange font-semibold">strategists</span>,{' '}

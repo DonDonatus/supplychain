@@ -66,13 +66,14 @@ export default function SuccessesPage() {
             {/* Hero Section */}
             <section className="relative min-h-[500px] flex items-center justify-center overflow-hidden bg-brand-blue pt-32">
                 {/* Background success growth image at bottom */}
-                <div className="absolute bottom-0 left-0 right-0 h-64 opacity-25">
+                <div className="absolute inset-0">
                     <Image
-                        src="/home/don/.gemini/antigravity/brain/ef907607-9ac1-45ca-948b-bcfd09289d6e/hero_success_growth_1763723025152.png"
+                        src="/success.png"
                         alt="Success Growth"
                         fill
-                        className="object-cover object-bottom"
+                        className="object-cover "
                     />
+                <div className="absolute inset-0 bg-brand-blue/40"></div>
                 </div>
 
                 <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-16">
