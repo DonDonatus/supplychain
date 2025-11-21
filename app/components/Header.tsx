@@ -2,19 +2,10 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const navItems = [
     { name: 'Home', href: '/' },
@@ -25,96 +16,96 @@ export default function Header() {
   ];
 
   return (
-    <header 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled 
-          ? 'bg-white/98 backdrop-blur-md shadow-soft' 
-          : 'bg-white/95 backdrop-blur-sm'
-      }`}
-    >
-      <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" aria-label="Main navigation">
-        <div className="flex h-20 items-center justify-between">
-          {/* Logo */}
-          <div className="flex items-center">
-            <Link href="/" className="flex items-center group">
+    <header className="fixed top-0 left-0 right-0 z-50">
+      {/* Single Blue Navigation Bar */}
+      <nav className="bg-brand-blue py-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between gap-8">
+            {/* Logo */}
+            <Link href="/" className="flex items-center flex-shrink-0">
               <Image
                 src="/scv.png"
                 alt="SCV Supply Chain Solutions"
-                width={140}
-                height={45}
+                width={100}
+                height={32}
                 priority
-                className="h-11 w-auto transition-transform duration-200 group-hover:scale-105"
+                className="h-8 w-auto"
               />
             </Link>
-          </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex md:items-center md:space-x-1 md:ml-auto">
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="px-4 py-2 text-[15px] font-medium text-gray-700 hover:text-brand-blue transition-colors duration-200 relative group"
-              >
-                {item.name}
-                <span className="absolute bottom-0 left-4 right-4 h-0.5 bg-brand-blue scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left"></span>
-              </Link>
-            ))}
-            <Link
-              href="/contacts"
-              className="ml-4 px-6 py-2.5 bg-brand-orange text-white font-semibold text-[15px] rounded-full hover:bg-brand-orange-dark transition-all duration-200 shadow-soft hover:shadow-medium btn-hover-lift"
-            >
-              Contact Us
-            </Link>
-          </div>
+            {/* Desktop Navigation - Rounded Pill */}
+            <div className="hidden md:flex items-center flex-1 justify-center">
+              <div className="bg-white/10 backdrop-blur-sm rounded-full px-8 py-3 flex items-center gap-8">
+                {navItems.map((item) => (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className="text-white font-medium text-[15px] hover:text-white/80 transition-colors duration-200"
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
 
-          {/* Mobile menu button */}
-          <div className="flex md:hidden">
-            <button
-              type="button"
-              className="inline-flex items-center justify-center p-2.5 rounded-lg text-gray-700 hover:text-brand-blue hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-brand-blue transition-colors"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-expanded={mobileMenuOpen}
-              aria-label="Toggle navigation menu"
-            >
-              <span className="sr-only">Open main menu</span>
-              {!mobileMenuOpen ? (
-                <svg className="block h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                </svg>
-              ) : (
-                <svg className="block h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              )}
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile menu */}
-        {mobileMenuOpen && (
-          <div className="md:hidden border-t border-gray-100 py-4 animate-fadeIn">
-            <div className="space-y-1 px-2 pb-3 pt-2">
-              {navItems.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className="block px-4 py-3 rounded-lg text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50 transition-colors"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {item.name}
-                </Link>
-              ))}
+            {/* Contact Us Button */}
+            <div className="hidden md:block flex-shrink-0">
               <Link
                 href="/contacts"
-                className="block mt-4 px-4 py-3 bg-brand-orange text-white font-semibold text-base rounded-lg hover:bg-brand-orange-dark transition-colors text-center"
-                onClick={() => setMobileMenuOpen(false)}
+                className="bg-brand-orange text-white font-semibold text-[15px] px-6 py-3 rounded-full hover:bg-brand-orange-dark transition-all duration-200 shadow-lg hover:shadow-xl inline-flex items-center gap-2"
               >
                 Contact Us
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
               </Link>
             </div>
+
+            {/* Mobile menu button */}
+            <div className="flex md:hidden">
+              <button
+                type="button"
+                className="inline-flex items-center justify-center p-2 rounded-lg text-white hover:bg-white/10 focus:outline-none"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              >
+                {!mobileMenuOpen ? (
+                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  </svg>
+                ) : (
+                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                )}
+              </button>
+            </div>
           </div>
-        )}
+
+          {/* Mobile menu */}
+          {mobileMenuOpen && (
+            <div className="md:hidden mt-4 pb-4">
+              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 space-y-2">
+                {navItems.map((item) => (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className="block px-4 py-3 text-white font-medium rounded-lg hover:bg-white/10 transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+                <Link
+                  href="/contacts"
+                  className="block mt-4 px-4 py-3 bg-brand-orange text-white font-semibold rounded-lg hover:bg-brand-orange-dark transition-colors text-center"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Contact Us →
+                </Link>
+              </div>
+            </div>
+          )}
+        </div>
       </nav>
     </header>
   );

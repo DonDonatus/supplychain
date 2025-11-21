@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 
 export default function ContactsPage() {
   const [formData, setFormData] = useState({
@@ -26,11 +27,22 @@ export default function ContactsPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-gray-900 via-[#1e4d6b] to-[#3987b8] text-white py-20 md:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold mb-5 md:mb-6 leading-tight">Contact Us</h1>
-          <div className="w-20 md:w-24 h-1.5 bg-brand-orange mb-6 md:mb-8"></div>
-          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 max-w-3xl leading-relaxed font-normal">
+      <section className="relative min-h-[500px] flex items-center justify-center overflow-hidden bg-brand-blue pt-32">
+        {/* Background communication image at bottom */}
+        <div className="absolute bottom-0 left-0 right-0 h-64 opacity-25">
+          <Image
+            src="/home/don/.gemini/antigravity/brain/ef907607-9ac1-45ca-948b-bcfd09289d6e/hero_communication_1763723043934.png"
+            alt="Communication"
+            fill
+            className="object-cover object-bottom"
+          />
+        </div>
+
+        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-16">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
+            Contact Us
+          </h1>
+          <p className="text-lg sm:text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
             Let's discuss how we can help transform your supply chain
           </p>
         </div>
