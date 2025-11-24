@@ -20,7 +20,7 @@ export default function Home() {
                         priority
                     />
                     {/* Dark overlay for text readability */}
-                    <div className="absolute inset-0 bg-brand-blue/40"></div>
+                    <div className="absolute inset-0 bg-gradient-to-b from-brand-black/60 via-brand-black/50 to-brand-black/70"></div>
                 </div>
 
                 <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-8 sm:py-12 md:py-16 lg:py-20">
