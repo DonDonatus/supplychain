@@ -99,7 +99,7 @@ export default function Home() {
                     </div>
 
                     {/* Client Logos Grid */}
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-wrap items-center justify-center gap-4 sm:gap-6 md:gap-8 lg:gap-12 xl:gap-16">
+                    <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 md:gap-8 lg:gap-12 xl:gap-16">
                         <div className="flex items-center justify-center">
                             <Image src="/logo/nasa-logo.svg" alt="NASA" width={100} height={100} className="h-10 sm:h-12 md:h-14 lg:h-16 w-auto object-contain" />
                         </div>
@@ -112,7 +112,7 @@ export default function Home() {
                         <div className="flex items-center justify-center">
                             <Image src="/logo/africacom.png" alt="Africa Command" width={100} height={100} className="h-10 sm:h-12 md:h-14 lg:h-16 w-auto object-contain" />
                         </div>
-                        <div className="flex items-center justify-center col-span-2 sm:col-span-1">
+                        <div className="flex items-center justify-center">
                             <Image src="/logo/mda.png" alt="MDA" width={100} height={100} className="h-10 sm:h-12 md:h-14 lg:h-16 w-auto object-contain" />
                         </div>
                     </div>
