@@ -5,8 +5,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 
-// Dynamically import Globe3D to avoid SSR issues with Three.js
-const Globe3D = dynamic(() => import('../components/Globe3D'), { ssr: false });
+// Dynamically import Globe to avoid SSR issues
+const Globe3D = dynamic(() => import('@/components/ui/globe').then(mod => ({ default: mod.Globe })), { ssr: false });
 
 export default function AboutPage() {
     const [selectedMember, setSelectedMember] = useState<number | null>(null);
