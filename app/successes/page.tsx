@@ -1,8 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import Image from 'next/image';
-import { TrendingUp, Warehouse, Globe, Map, Palette, Mail, GraduationCap, BarChart3, Award, BookOpen, Receipt, Trophy } from 'lucide-react';
+import { TrendingUp, Warehouse, Globe, Map, Mail, GraduationCap, BarChart3, Receipt } from 'lucide-react';
 
 export default function SuccessesPage() {
     const successStories = [
@@ -79,9 +78,9 @@ export default function SuccessesPage() {
     ];
 
     return (
-        <div className="min-h-screen bg-white">
+        <main className="min-h-screen bg-white dark:bg-gray-900">
             {/* Hero Section */}
-            <section className="relative min-h-[500px] flex items-center justify-center overflow-hidden bg-brand-blue pt-32">
+            <section className="relative min-h-[400px] sm:min-h-[500px] flex items-center justify-center overflow-hidden bg-brand-blue pt-32">
                 {/* Background success growth image at bottom */}
                 <div className="absolute inset-0">
                     <Image
@@ -93,11 +92,11 @@ export default function SuccessesPage() {
                 <div className="absolute inset-0 bg-brand-blue/40"></div>
                 </div>
 
-                <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-16">
-                    <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
+                <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-8 sm:py-12 md:py-16">
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 leading-tight">
                         Our Successes
                     </h1>
-                    <p className="text-lg sm:text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
+                    <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed px-2">
                         Delivering excellence across industries and borders.
                         Explore our proven track record of transformative
                         projects.
@@ -106,31 +105,44 @@ export default function SuccessesPage() {
             </section>
 
             {/* Success Stories Section */}
-            <section className="py-20 bg-white">
+            <section className="py-12 sm:py-16 md:py-20 bg-white dark:bg-gray-900">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="grid md:grid-cols-2 gap-8">
+                    {/* Section Header */}
+                    <div className="text-center mb-12">
+                        <div className="inline-block bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs font-medium px-3 py-1.5 rounded-md mb-4 uppercase tracking-wide">
+                            SUCCESS STORIES
+                        </div>
+                        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4 leading-tight">
+                            Success Stories
+                        </h2>
+                        <p className="text-gray-600 dark:text-gray-400 text-sm max-w-2xl mx-auto">
+                            Proven results across industries and borders with measurable impact
+                        </p>
+                    </div>
+
+                    <div className="grid md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
                         {successStories.map((story, index) => {
                             const Icon = story.icon;
 
                             return (
                                 <div
                                     key={index}
-                                    className="bg-white border border-gray-200 rounded-xl p-8 hover:shadow-lg transition-all duration-300"
+                                    className="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl p-4 sm:p-6 md:p-8 hover:shadow-md hover:border-brand-blue/20 dark:hover:border-brand-blue/40 transition-all duration-300 group"
                                 >
-                                    <div className="flex items-start gap-4 mb-4">
-                                        <div className={`flex-shrink-0 w-10 h-10 rounded-lg ${story.iconColor.bg} flex items-center justify-center`}>
-                                            <Icon className={`w-6 h-6 ${story.iconColor.text}`} />
+                                    <div className="flex items-start gap-3 sm:gap-4 mb-3 sm:mb-4">
+                                        <div className={`shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-lg ${story.iconColor.bg} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                                            <Icon className={`w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 ${story.iconColor.text}`} />
                                         </div>
-                                        <div className="flex-1">
-                                            <span className="inline-block bg-gray-100 text-gray-700 text-xs font-medium px-3 py-1.5 rounded-md uppercase tracking-wide">
+                                        <div className="flex-1 min-w-0">
+                                            <span className="inline-block bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs font-medium px-2 sm:px-3 py-1 sm:py-1.5 rounded-md uppercase tracking-wide">
                                                 {story.category}
                                             </span>
                                         </div>
                                     </div>
-                                    <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-4">
+                                    <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">
                                         {story.title}
                                     </h3>
-                                    <p className="text-gray-700 leading-relaxed">
+                                    <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed">
                                         {story.description}
                                     </p>
                                 </div>
@@ -141,26 +153,34 @@ export default function SuccessesPage() {
             </section>
 
             {/* Awards & Recognition Section */}
-            <section className="py-20 bg-gray-50">
-                <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="mb-12">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-12 h-12 rounded-md bg-yellow-100 flex items-center justify-center">
-                                <Trophy className="w-8 h-8 text-yellow-600" />
-                            </div>
-                            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-                                Awards & Recognition
-                            </h2>
+            <section className="py-12 sm:py-16 md:py-20 bg-gray-50 dark:bg-gray-800">
+                <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                    {/* Section Header */}
+                    <div className="text-center mb-12">
+                        <div className="inline-block bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs font-medium px-3 py-1.5 rounded-md mb-4 uppercase tracking-wide">
+                            AWARDS
                         </div>
+                        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4 leading-tight">
+                            Awards & Recognition
+                        </h2>
+                        <p className="text-gray-600 dark:text-gray-400 text-sm max-w-2xl mx-auto">
+                            Recognized by industry leaders and organizations for excellence and innovation
+                        </p>
                     </div>
 
-                    <div className="space-y-4">
+                    {/* Awards Grid */}
+                    <div className="grid md:grid-cols-3 gap-6">
                         {awards.map((award, index) => (
                             <div
                                 key={index}
-                                className="bg-white rounded-lg p-6 border border-gray-200 hover:border-gray-300 transition-colors"
+                                className="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl p-6 hover:shadow-md hover:border-brand-blue/20 dark:hover:border-brand-blue/40 transition-all duration-300 relative overflow-hidden"
                             >
-                                <p className="text-gray-700 leading-relaxed">
+                                {/* Award number badge */}
+                                <div className="absolute top-4 right-4 w-8 h-8 rounded-full bg-brand-blue/10 flex items-center justify-center text-xs font-bold text-brand-blue">
+                                    {index + 1}
+                                </div>
+
+                                <p className="text-gray-900 dark:text-gray-100 font-semibold text-sm leading-relaxed pr-6">
                                     {award}
                                 </p>
                             </div>
@@ -170,52 +190,54 @@ export default function SuccessesPage() {
             </section>
 
             {/* Publications Section */}
-            <section className="py-20 bg-white">
-                <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="mb-12">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center">
-                                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                                </svg>
-                            </div>
-                            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-                                Publications
-                            </h2>
+            <section className="py-12 sm:py-16 md:py-20 bg-gray-50 dark:bg-gray-800">
+                <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                    {/* Section Header */}
+                    <div className="text-center mb-12">
+                        <div className="inline-block bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs font-medium px-3 py-1.5 rounded-md mb-4 uppercase tracking-wide">
+                            PUBLICATIONS
                         </div>
+                        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4 leading-tight">
+                            Publications & Thought Leadership
+                        </h2>
+                        <p className="text-gray-600 dark:text-gray-400 text-sm max-w-2xl mx-auto">
+                            Read our industry insights and strategic perspectives in leading publications
+                        </p>
                     </div>
 
-                    <div className="bg-white rounded-lg p-8 border border-gray-200">
-                        <p className="text-gray-900 text-lg font-semibold mb-4">
-                            Quarterly Editorials
-                        </p>
-                        <p className="text-gray-600 mb-6">
-                            Read our thought leadership and industry insights published in Supply Chain Quarterly.
-                        </p>
-                        <a
-                            href="https://www.supplychainquarterly.com/blogs/1-reflections"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 text-brand-blue hover:text-brand-blue-dark font-medium transition-colors"
-                        >
-                            View Our Contributions
-                            <svg
-                                className="w-5 h-5"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M17 8l4 4m0 0l-4 4m4-4H3"
-                                />
-                            </svg>
-                        </a>
+                    <div className="grid md:grid-cols-1 gap-8">
+                        <div className="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl p-8 hover:shadow-md hover:border-brand-blue/20 dark:hover:border-brand-blue/40 transition-all duration-300">
+                            <div className="flex items-start gap-6">
+                                <div className="w-16 h-16 rounded-lg bg-brand-blue/10 flex items-center justify-center shrink-0">
+                                    <svg className="w-8 h-8 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                    </svg>
+                                </div>
+                                <div className="flex-1">
+                                    <p className="text-gray-600 dark:text-gray-400 text-xs font-semibold uppercase tracking-wide mb-2">Supply Chain Quarterly</p>
+                                    <h3 className="text-gray-900 dark:text-gray-100 text-lg font-bold mb-2">
+                                        Quarterly Editorials
+                                    </h3>
+                                    <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed mb-6">
+                                        Read our thought leadership and industry insights published in Supply Chain Quarterly. Our team regularly contributes strategic perspectives on supply chain optimization, risk management, and economic network analysis.
+                                    </p>
+                                    <a
+                                        href="https://www.supplychainquarterly.com/blogs/1-reflections"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="btn-secondary text-sm"
+                                    >
+                                        Read Articles
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
+                                            <path d="M0 8a8 8 0 1 0 16 0A8 8 0 0 0 0 8m5.904 2.803a.5.5 0 1 1-.707-.707L9.293 6H6.525a.5.5 0 1 1 0-1H10.5a.5.5 0 0 1 .5.5v3.975a.5.5 0 0 1-1 0V6.707z" fill="currentColor"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
-        </div>
+        </main>
     );
 }

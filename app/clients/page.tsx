@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Building2, GraduationCap, Briefcase } from 'lucide-react';
 
 export default function ClientsPage() {
     const [activeFilter, setActiveFilter] = useState('all');
@@ -77,49 +77,16 @@ export default function ClientsPage() {
         ? clients 
         : clients.filter(client => client.sector === activeFilter);
 
-    const getSectorIcon = (sector: string) => {
-        switch(sector) {
-            case 'public':
-                return <Building2 className="w-5 h-5" />;
-            case 'private':
-                return <Briefcase className="w-5 h-5" />;
-            case 'education':
-                return <GraduationCap className="w-5 h-5" />;
-            default:
-                return <Building2 className="w-5 h-5" />;
-        }
+    const getFilterCount = (filterId: string) => {
+        if (filterId === 'all') return clients.length;
+        return clients.filter(c => c.sector === filterId).length;
     };
 
-    const getSectorColor = (sector: string) => {
-        switch(sector) {
-            case 'public':
-                return 'from-blue-50 to-blue-100 border-brand-blue/20 hover:border-brand-blue/40';
-            case 'private':
-                return 'from-orange-50 to-orange-100 border-brand-orange/20 hover:border-brand-orange/40';
-            case 'education':
-                return 'from-blue-50 to-blue-100 border-brand-blue/20 hover:border-brand-blue/40';
-            default:
-                return 'from-gray-50 to-gray-100 border-gray-200 hover:border-gray-300';
-        }
-    };
-
-    const getSectorIconColor = (sector: string) => {
-        switch(sector) {
-            case 'public':
-                return 'text-brand-blue bg-brand-blue/10';
-            case 'private':
-                return 'text-brand-orange bg-brand-orange/10';
-            case 'education':
-                return 'text-brand-blue bg-brand-blue/10';
-            default:
-                return 'text-gray-600 bg-gray-100';
-        }
-    };
 
     return (
-        <div className="bg-white">
+        <main className="bg-white dark:bg-gray-900">
             {/* Hero Section */}
-            <section className="relative min-h-[500px] flex items-center justify-center overflow-hidden bg-brand-blue pt-32">
+            <section className="relative min-h-[400px] sm:min-h-[500px] flex items-center justify-center overflow-hidden bg-brand-blue pt-32">
                 <div className="absolute inset-0">
                     <Image
                         src="/client.jpg"
@@ -131,46 +98,64 @@ export default function ClientsPage() {
                     <div className="absolute inset-0 bg-brand-blue/40"></div>
                 </div>
 
-                <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20">
-                    <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+                <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-8 sm:py-12 md:py-16 lg:py-20">
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight">
                         Our Clients
                     </h1>
-                    <p className="text-lg sm:text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
+                    <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed px-2">
                         Trusted by leading organizations across government, defense, and private sectors
                     </p>
                 </div>
             </section>
 
             {/* Clients Grid Section */}
-            <section className="py-20 bg-white">
+            <section className="py-12 sm:py-16 md:py-20 bg-white dark:bg-gray-900">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    {/* Filter Buttons */}
-                    <motion.div 
-                        className="flex flex-wrap gap-3 justify-center mb-12"
+                    {/* Section Header */}
+                    <motion.div
+                        className="text-center mb-12"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 }}
+                    >
+                        <div className="inline-block bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs font-medium px-3 py-1.5 rounded-md mb-4 uppercase tracking-wide">
+                            OUR CLIENTS
+                        </div>
+                        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4 leading-tight">
+                            Our Clients
+                        </h2>
+                        <p className="text-gray-600 dark:text-gray-400 text-sm max-w-2xl mx-auto">
+                            Trusted partners across government, defense, commercial, and academic sectors
+                        </p>
+                    </motion.div>
+
+                    {/* Filter Buttons */}
+                    <motion.div 
+                        className="flex flex-wrap gap-2 justify-center mb-8 sm:mb-12 md:mb-16 px-2"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.1 }}
                     >
                         {filters.map((filter) => (
                             <motion.button
                                 key={filter.id}
                                 onClick={() => setActiveFilter(filter.id)}
-                                className={`px-5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+                                className={`px-3 sm:px-4 md:px-5 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 cursor-pointer min-h-[36px] sm:min-h-[40px] ${
                                     activeFilter === filter.id
                                         ? 'bg-brand-blue text-white shadow-sm'
-                                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                        : 'bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-gray-100'
                                 }`}
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
                             >
-                                {filter.label}
+                                <span className="whitespace-nowrap">{filter.label}</span> <span className="ml-1 sm:ml-1.5 text-xs opacity-75">({getFilterCount(filter.id)})</span>
                             </motion.button>
                         ))}
                     </motion.div>
 
                     {/* Clients Grid */}
                     <motion.div 
-                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-3"
                         layout
                     >
                         <AnimatePresence mode="popLayout">
@@ -178,29 +163,18 @@ export default function ClientsPage() {
                                 <motion.div
                                     key={client.name}
                                     layout
-                                    initial={{ opacity: 0, scale: 0.8 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    exit={{ opacity: 0, scale: 0.8 }}
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -10 }}
                                     transition={{ 
-                                        duration: 0.3,
-                                        delay: index * 0.02
+                                        duration: 0.2,
+                                        delay: index * 0.01
                                     }}
-                                    whileHover={{ 
-                                        scale: 1.02,
-                                        y: -4
-                                    }}
-                                    className={`bg-gradient-to-br ${getSectorColor(client.sector)} rounded-xl p-4 transition-all duration-200 border-2 cursor-pointer group`}
+                                    className="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl px-3 sm:px-4 md:px-5 py-3 sm:py-4"
                                 >
-                                    <div className="flex items-start gap-3">
-                                        <div className={`flex-shrink-0 w-10 h-10 rounded-lg ${getSectorIconColor(client.sector)} flex items-center justify-center group-hover:scale-110 transition-transform`}>
-                                            {getSectorIcon(client.sector)}
-                                        </div>
-                                        <div className="flex-1 min-w-0">
-                                            <p className="text-gray-900 text-sm font-semibold leading-snug">
-                                                {client.name}
-                                            </p>
-                                        </div>
-                                    </div>
+                                    <p className="text-gray-900 dark:text-gray-100 text-xs sm:text-sm font-normal leading-snug">
+                                        {client.name}
+                                    </p>
                                 </motion.div>
                             ))}
                         </AnimatePresence>
@@ -208,8 +182,30 @@ export default function ClientsPage() {
                 </div>
             </section>
 
+            {/* CTA Section */}
+            <section className="bg-gradient-to-r from-brand-blue to-brand-blue-dark py-8 sm:py-12 md:py-16 lg:py-20">
+                <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                    <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4 leading-tight px-2">
+                        Join Our Network of Trusted Partners
+                    </h2>
+                    <p className="text-white/90 text-sm sm:text-base md:text-lg mb-5 sm:mb-6 md:mb-8 max-w-2xl mx-auto px-2">
+                        Discover how our strategic supply chain expertise can transform your organization
+                    </p>
+                    <Link
+                        href="/contacts"
+                        className="btn-primary text-sm sm:text-base px-6 sm:px-8 py-3"
+                    >
+                        Become a Partner
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
+                            <circle cx="8" cy="8" r="8" fill="white"/>
+                            <path d="M5.904 10.803a.5.5 0 1 1-.707-.707L9.293 6H6.525a.5.5 0 1 1 0-1H10.5a.5.5 0 0 1 .5.5v3.975a.5.5 0 0 1-1 0V6.707z" fill="#f68921"/>
+                        </svg>
+                    </Link>
+                </div>
+            </section>
+
             {/* Testimonials Section */}
-            <section className="py-20 bg-gray-50">
+            <section className="py-12 sm:py-16 md:py-20 bg-gray-50 dark:bg-gray-800">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     {/* Header */}
                     <motion.div
@@ -219,19 +215,19 @@ export default function ClientsPage() {
                         viewport={{ once: true }}
                         transition={{ duration: 0.6 }}
                     >
-                        <div className="inline-block bg-gray-200 text-gray-700 text-xs font-medium px-3 py-1.5 rounded-md mb-4 uppercase tracking-wide">
+                        <div className="inline-block bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs font-medium px-3 py-1.5 rounded-md mb-4 uppercase tracking-wide">
                             TESTIMONIALS
                         </div>
-                        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 leading-tight">
+                        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4 leading-tight">
                             Client Success Stories
                         </h2>
-                        <p className="text-gray-600 text-sm leading-relaxed max-w-2xl mx-auto">
+                        <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed max-w-2xl mx-auto">
                             Our clients across government, defense, aerospace, and commercial sectors have achieved measurable improvements in efficiency, risk mitigation, and cost savings.
                         </p>
                     </motion.div>
 
                     {/* Testimonials Grid - Horizontal */}
-                    <div className="grid md:grid-cols-3 gap-6">
+                    <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
                         {testimonials.map((testimonial, index) => (
                             <motion.div
                                 key={index}
@@ -240,27 +236,27 @@ export default function ClientsPage() {
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.5, delay: index * 0.1 }}
                                 whileHover={{ y: -5 }}
-                                className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow"
+                                className="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl p-4 sm:p-5 md:p-6 lg:p-7 hover:shadow-md hover:border-brand-blue/20 dark:hover:border-brand-blue/40 transition-all duration-300 group"
                             >
-                                <div className="mb-4">
+                                <div className="mb-5">
                                     <svg
-                                        className="w-10 h-10 text-gray-300"
+                                        className="w-10 h-10 text-brand-blue/20 group-hover:text-brand-blue/30 transition-colors duration-300"
                                         fill="currentColor"
                                         viewBox="0 0 24 24"
                                     >
                                         <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
                                     </svg>
                                 </div>
-                                <p className="text-gray-900 text-sm leading-relaxed mb-6">
-                                    {testimonial.quote}
+                                <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed mb-6">
+                                    &ldquo;{testimonial.quote}&rdquo;
                                 </p>
-                                <div className="flex items-center gap-3">
-                                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-brand-blue to-brand-blue-dark flex-shrink-0"></div>
+                                <div className="flex items-center gap-3 pt-4 border-t border-gray-100 dark:border-gray-700">
+                                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-brand-blue to-brand-blue-dark shrink-0 ring-2 ring-brand-blue/10 group-hover:ring-brand-blue/20 transition-all duration-300"></div>
                                     <div>
-                                        <p className="font-bold text-gray-900 text-sm">
+                                        <p className="font-semibold text-gray-900 dark:text-gray-100 text-sm">
                                             {testimonial.author}
                                         </p>
-                                        <p className="text-xs text-gray-600">
+                                        <p className="text-xs text-gray-600 dark:text-gray-400 mt-0.5">
                                             {testimonial.role}
                                         </p>
                                     </div>
@@ -270,6 +266,6 @@ export default function ClientsPage() {
                     </div>
                 </div>
             </section>
-        </div>
+        </main>
     );
 }
