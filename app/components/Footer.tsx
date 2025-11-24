@@ -21,7 +21,7 @@ export default function Footer() {
                                 alt="SCV Supply Chain"
                                 width={120}
                                 height={40}
-                                className="h-8 sm:h-10 w-auto"
+                                className="h-8 sm:h-10 w-auto dark:invert"
                             />
                         </Link>
                         <p className="text-gray-700 dark:text-gray-300 text-xs sm:text-sm leading-relaxed max-w-sm">

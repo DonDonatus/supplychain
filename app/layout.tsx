@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Instrument_Sans } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { ThemeProvider } from "./components/ThemeProvider";
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const instrumentSans = Instrument_Sans({
     subsets: ["latin"],
-    weight: ["200", "300", "400", "500", "600", "700", "800"],
+    weight: ["400", "500", "600", "700"],
     display: "swap",
 });
 
@@ -32,7 +32,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" className={`font-sans ${plusJakartaSans.className}`}>
+        <html lang="en" className={`font-sans ${instrumentSans.className}`}>
             <body className="antialiased">
                 <ThemeProvider>
                     <Header />

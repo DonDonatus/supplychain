@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 export default function ClientsPage() {
     const [activeFilter, setActiveFilter] = useState('all');
+    const [showAll, setShowAll] = useState(false);
 
     const clients = [
         { name: "United States Africa Command", sector: "public" },
@@ -82,6 +83,13 @@ export default function ClientsPage() {
         return clients.filter(c => c.sector === filterId).length;
     };
 
+    // Mobile: show 6 initially (3 rows with 2 columns), desktop: show all
+    const initialDisplayCount = 6;
+    const displayClients = showAll 
+        ? filteredClients 
+        : filteredClients.slice(0, initialDisplayCount);
+    const hasMore = filteredClients.length > initialDisplayCount;
+
 
     return (
         <main className="bg-white dark:bg-gray-900">
@@ -102,14 +110,14 @@ export default function ClientsPage() {
                     <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight">
                         Our Clients
                     </h1>
-                    <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed px-2">
+                    <p className="text-xs text-white/90 max-w-3xl mx-auto leading-relaxed px-2">
                         Trusted by leading organizations across government, defense, and private sectors
                     </p>
                 </div>
             </section>
 
             {/* Clients Grid Section */}
-            <section className="py-12 sm:py-16 md:py-20 bg-white dark:bg-gray-900">
+            <section id="clients-section" className="py-12 sm:py-16 md:py-20 bg-white dark:bg-gray-900">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     {/* Section Header */}
                     <motion.div
@@ -124,14 +132,14 @@ export default function ClientsPage() {
                         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4 leading-tight">
                             Our Clients
                         </h2>
-                        <p className="text-gray-600 dark:text-gray-400 text-sm max-w-2xl mx-auto">
+                        <p className="text-gray-600 dark:text-gray-400 text-base max-w-2xl mx-auto">
                             Trusted partners across government, defense, commercial, and academic sectors
                         </p>
                     </motion.div>
 
                     {/* Filter Buttons */}
                     <motion.div 
-                        className="flex flex-wrap gap-2 justify-center mb-8 sm:mb-12 md:mb-16 px-2"
+                        className="flex flex-wrap gap-2 justify-center mb-4 sm:mb-6 px-2"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.1 }}
@@ -139,8 +147,11 @@ export default function ClientsPage() {
                         {filters.map((filter) => (
                             <motion.button
                                 key={filter.id}
-                                onClick={() => setActiveFilter(filter.id)}
-                                className={`px-3 sm:px-4 md:px-5 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 cursor-pointer min-h-[36px] sm:min-h-[40px] ${
+                                onClick={() => {
+                                    setActiveFilter(filter.id);
+                                    setShowAll(false); // Reset show all when filter changes
+                                }}
+                                className={`px-3 sm:px-4 md:px-5 py-1.5 sm:py-2 rounded-full text-xs font-medium transition-all duration-200 cursor-pointer min-h-[36px] sm:min-h-[40px] ${
                                     activeFilter === filter.id
                                         ? 'bg-brand-blue text-white shadow-sm'
                                         : 'bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-gray-100'
@@ -153,13 +164,14 @@ export default function ClientsPage() {
                         ))}
                     </motion.div>
 
-                    {/* Clients Grid */}
+                    {/* Clients List */}
                     <motion.div 
-                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-3"
+                        id="clients-grid"
                         layout
+                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 sm:gap-x-8 lg:gap-x-12 gap-y-2 sm:gap-y-3"
                     >
                         <AnimatePresence mode="popLayout">
-                            {filteredClients.map((client, index) => (
+                            {displayClients.map((client, index) => (
                                 <motion.div
                                     key={client.name}
                                     layout
@@ -170,15 +182,54 @@ export default function ClientsPage() {
                                         duration: 0.2,
                                         delay: index * 0.01
                                     }}
-                                    className="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl px-3 sm:px-4 md:px-5 py-3 sm:py-4"
+                                    className="flex items-center gap-2 group"
                                 >
-                                    <p className="text-gray-900 dark:text-gray-100 text-xs sm:text-sm font-normal leading-snug">
+                                    <span className="text-brand-blue shrink-0">•</span>
+                                    <span className="text-gray-900 dark:text-gray-100 text-xs font-normal leading-relaxed group-hover:text-brand-blue dark:group-hover:text-brand-blue transition-colors duration-200">
                                         {client.name}
-                                    </p>
+                                    </span>
                                 </motion.div>
                             ))}
                         </AnimatePresence>
                     </motion.div>
+
+                    {/* Show More Link - Visible on all screen sizes when there are more items */}
+                    {hasMore && !showAll && (
+                        <motion.div
+                            className="flex justify-center mt-6"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.3 }}
+                        >
+                            <button
+                                onClick={() => setShowAll(true)}
+                                className="text-xs text-brand-blue hover:text-brand-blue-dark font-medium transition-colors duration-200"
+                            >
+                                Show All {filteredClients.length} Clients
+                            </button>
+                        </motion.div>
+                    )}
+
+                    {/* Show Less Link - Visible on all screen sizes when all are shown */}
+                    {showAll && hasMore && (
+                        <motion.div
+                            className="flex justify-center mt-6"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.3 }}
+                        >
+                            <button
+                                onClick={() => {
+                                    setShowAll(false);
+                                    // Smooth scroll to top of section
+                                    document.getElementById('clients-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                }}
+                                className="text-xs text-brand-blue hover:text-brand-blue-dark font-medium transition-colors duration-200"
+                            >
+                                Show Less
+                            </button>
+                        </motion.div>
+                    )}
                 </div>
             </section>
 
@@ -221,7 +272,7 @@ export default function ClientsPage() {
                         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4 leading-tight">
                             Client Success Stories
                         </h2>
-                        <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed max-w-2xl mx-auto">
+                        <p className="text-gray-600 dark:text-gray-400 text-base leading-relaxed max-w-2xl mx-auto">
                             Our clients across government, defense, aerospace, and commercial sectors have achieved measurable improvements in efficiency, risk mitigation, and cost savings.
                         </p>
                     </motion.div>

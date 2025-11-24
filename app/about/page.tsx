@@ -11,6 +11,90 @@ const Globe3D = dynamic(() => import('../components/Globe3D'), { ssr: false });
 export default function AboutPage() {
     const [selectedMember, setSelectedMember] = useState<number | null>(null);
 
+    // Helper function to convert to Title Case
+    const toTitleCase = (str: string) => {
+        return str.toLowerCase().replace(/\b\w/g, (char) => char.toUpperCase());
+    };
+
+    // Get icon and color for each NAICS code using Heroicons outline
+    const getNaicsIconWithColor = (code: string) => {
+        const iconMap: Record<string, { icon: React.ReactElement; color: string }> = {
+            '541330': {
+                color: 'text-blue-600',
+                icon: (
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                    </svg>
+                )
+            },
+            '541610': {
+                color: 'text-purple-600',
+                icon: (
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                )
+            },
+            '541611': {
+                color: 'text-green-600',
+                icon: (
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                    </svg>
+                )
+            },
+            '541613': {
+                color: 'text-orange-600',
+                icon: (
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                )
+            },
+            '541614': {
+                color: 'text-red-600',
+                icon: (
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                    </svg>
+                )
+            },
+            '541690': {
+                color: 'text-indigo-600',
+                icon: (
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                )
+            },
+            '611430': {
+                color: 'text-pink-600',
+                icon: (
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6" />
+                    </svg>
+                )
+            },
+            '611710': {
+                color: 'text-teal-600',
+                icon: (
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
+                    </svg>
+                )
+            },
+        };
+        return iconMap[code] || {
+            color: 'text-gray-600',
+            icon: (
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+            )
+        };
+    };
+
     const naicsCodes = [
         { code: '541330', name: 'ENGINEERING SERVICES' },
         { code: '541610', name: 'MANAGEMENT CONSULTING SERVICES' },
@@ -33,6 +117,7 @@ export default function AboutPage() {
     ];
 
     const teamLeaders = [
+        { name: 'Jake Sones', role: 'CEO', description: 'is a seasoned executive strategy and financial management leader with experience supporting the Department of Defense (DoD) and the Department of Homeland Security (DHS). He has led the design, development, and implementation of innovative financial management systems and audit readiness solutions to meet evolving federal accounting, audit, and fiscal monitoring requirements. His leadership was instrumental in downgrading multiple material weaknesses across the DoD and driving the adoption of enterprise-wide technological solutions. His comprehensive expertise and cross-functional leadership continue to shape the future of financial management and audit strategy across the federal landscape.', image: '/team/jake.jpg' },
         { name: 'Shawn Winn', role: 'Director', description: 'is an expert in business operations and transportation. He currently serves as a Director for Supply Chain Visions Inc. and manages projects and professional networks around the globe. His work includes supply chain and industrial base assessments for Maersk across the continent of Africa and the Departments of Defense and Commerce across the Middle East and Central Asia. Shawn holds a BBA from the College of William and Mary and an MBA from the University of Tennessee. He is a Certified Production and Inventory Control Manager with additional certifications in Lean Six Sigma/Continuous Process Improvement and supply chain technologies.', image: '/team/swin.png' },
         { name: 'Matt Hunt', role: 'Financial Management Expert', description: 'has spent the last decade providing financial management and strategic enterprise support to clients throughout the Department of Defense. His focus has been on development and implementation of solutions for complex enterprise challenges. He is an expert of organizational studies, change management, enterprise/program communication strategy, process improvement, training, and technical analysis. He has extensive knowledge of audit sustainment and policies as it relates to audit readiness and accounting standards.', image: '/team/mhunt.png' },
         { name: 'Mike Rudolph', role: 'Retired Marine Colonel', description: 'is a retired Marine Colonel with over 30 years of operational experience, proven leadership, and management success. He has worked around the globe solving business challenges, from small/local to regional and global reach. Mike has led organizations at all levels of complexity and responsibility to develop solutions that produced performance improvements and quantifiable return on investment by using proven leadership, management, and business processes. He is a writer for DC Velocity and a graduate of the University of Missouri, with advanced education from the University of North Carolina (UNC), Pennsylvania State University (Penn State), and Marine Corps University.', image: '/team/mrudolph.png' },
@@ -78,7 +163,7 @@ export default function AboutPage() {
                             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4 sm:mb-6 leading-tight">
                                 Meet our leadership
                             </h2>
-                            <p className="text-gray-600 dark:text-gray-400 text-sm sm:text-base leading-relaxed">
+                            <p className="text-gray-600 dark:text-gray-400 text-base leading-relaxed">
                             We&apos;re a dynamic group of individuals who are passionate about what we do and dedicated to delivering the best results for our clients.
                         </p>
                     </div>
@@ -147,7 +232,7 @@ export default function AboutPage() {
                                 </div>
                                 <button
                                     onClick={() => setSelectedMember(null)}
-                                    className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors shrink-0 ml-2 min-w-[44px] min-h-[44px] flex items-center justify-center"
+                                    className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors shrink-0 ml-2 min-w-[44px] min-h-[44px] flex items-center justify-center cursor-pointer"
                                     aria-label="Close modal"
                                 >
                                     <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -168,11 +253,33 @@ export default function AboutPage() {
                 )}
             </section>
 
+            {/* Our Vision Section */}
+            <section className="py-12 sm:py-16 md:py-20 bg-gray-50 dark:bg-gray-800">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="text-center mb-8 sm:mb-12">
+                        <div className="inline-block bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs font-medium px-3 py-1.5 rounded-md mb-4 uppercase tracking-wide">
+                            OUR VISION
+                        </div>
+                        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-6 leading-tight">
+                            Our Vision
+                        </h2>
+                    </div>
+                    <div className="max-w-4xl mx-auto">
+                        <p className="text-gray-700 dark:text-gray-300 text-base sm:text-lg leading-relaxed mb-6">
+                            Across regions and borders around the globe, our team of experts uses decades of industry-leading and nationally recognized expertise to empower the connections between people, ideas, and things.
+                        </p>
+                        <p className="text-gray-700 dark:text-gray-300 text-base sm:text-lg leading-relaxed">
+                            From organizing independent producers in Afghanistan into a business community competitive in a global market, to leading graduate and executive education through partnerships with top universities, we meet client needs by drawing on a deep bench of experts to analyze and execute strategic insights like no other organization can.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
             {/* Company Overview Banner Section */}
             <section className="bg-gradient-to-r from-brand-blue to-brand-blue-dark py-8 sm:py-12 md:py-16 lg:py-20">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4 leading-tight px-2">
-                        Experts the Experts Turn To
+                        Your Strategic Supply Chain Partner
                     </h2>
                     <p className="text-white/90 text-sm sm:text-base md:text-lg mb-6 sm:mb-8 max-w-2xl mx-auto leading-relaxed px-2">
                         We partner with organizations to optimize supply chain performance. Our seasoned team combines strategic thinking with practical execution across government, aerospace, defense, and commercial sectors.
@@ -190,26 +297,32 @@ export default function AboutPage() {
                         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4 leading-tight">
                             NAICS Codes
                         </h2>
-                        <p className="text-gray-600 dark:text-gray-400 text-sm max-w-2xl mx-auto">
+                        <p className="text-gray-600 dark:text-gray-400 text-base max-w-2xl mx-auto">
                             Our certified capabilities across multiple industry classifications
                         </p>
                     </div>
 
                     <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {naicsCodes.map((item, index) => (
-                            <div
-                                key={index}
-                                className="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl p-5 hover:shadow-md hover:border-brand-blue/20 dark:hover:border-brand-blue/40 transition-all duration-300 group"
-                            >
-                                <div className="flex items-start gap-2 mb-2">
-                                    <div className="w-1 h-6 bg-brand-blue rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                                    <div className="flex-1">
-                                        <div className="text-brand-blue text-lg font-bold mb-1.5">{item.code}</div>
-                                        <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">{item.name}</p>
+                        {naicsCodes.map((item, index) => {
+                            const { icon, color } = getNaicsIconWithColor(item.code);
+                            const bgColorClass = color.replace('text', 'bg').replace('600', '100');
+                            return (
+                                <div
+                                    key={index}
+                                    className="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl p-5 hover:shadow-md transition-all duration-300 group"
+                                >
+                                    <div className="flex items-start gap-3">
+                                        <div className={`shrink-0 w-10 h-10 rounded-lg flex items-center justify-center group-hover:scale-110 transition-all duration-300 ${bgColorClass} ${color}`}>
+                                            {icon}
+                                        </div>
+                                        <div className="flex-1 min-w-0">
+                                            <div className={`${color} text-lg font-bold mb-1.5`}>{item.code}</div>
+                                            <p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed">{toTitleCase(item.name)}</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
                 </div>
             </section>
@@ -233,12 +346,12 @@ export default function AboutPage() {
                             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4 leading-tight">
                                 We Work Where Others Won&apos;t
                             </h2>
-                            <p className="text-gray-600 dark:text-gray-400 mb-6">
+                            <p className="text-gray-600 dark:text-gray-400 text-base mb-6">
                                 Our team has delivered successful projects across 45+ countries spanning six continents.
                             </p>
 
                             {/* Countries list in columns */}
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 sm:gap-x-6 gap-y-1.5 sm:gap-y-2">
+                            <div className="grid grid-cols-2 gap-x-4 sm:gap-x-6 gap-y-1.5 sm:gap-y-2">
                                 {countries.map((country, index) => (
                                     <div key={index} className="flex items-center gap-2">
                                         <div className="w-1.5 h-1.5 rounded-full bg-brand-orange shrink-0"></div>

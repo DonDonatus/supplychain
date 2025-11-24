@@ -56,7 +56,7 @@ export default function Header() {
                                 width={100}
                                 height={32}
                                 priority
-                                className="h-8 w-auto"
+                                className="h-8 w-auto dark:invert"
                             />
                         </Link>
 

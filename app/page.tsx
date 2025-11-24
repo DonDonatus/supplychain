@@ -52,9 +52,12 @@ export default function Home() {
                             <div className="inline-block bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs font-medium px-3 py-1.5 rounded-md mb-3 sm:mb-4 uppercase tracking-wide">
                                 ABOUT US
                             </div>
-                            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4 sm:mb-6 leading-tight">
+                            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-2 sm:mb-3 leading-tight">
                                 Transforming Supply Chain Strategy
                             </h2>
+                            <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 mb-4 sm:mb-6 leading-relaxed">
+                                Strategic consulting for modern supply chains. From optimization to risk management, we deliver results. Our team combines decades of industry-leading expertise with innovative solutions to help organizations navigate complex challenges and achieve sustainable growth.
+                            </p>
                             <Link
                                 href="/about"
                                 className="btn-secondary text-sm sm:text-base"
@@ -96,21 +99,21 @@ export default function Home() {
                     </div>
 
                     {/* Client Logos Grid */}
-                    <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 md:gap-8 lg:gap-12 xl:gap-16">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-wrap items-center justify-center gap-4 sm:gap-6 md:gap-8 lg:gap-12 xl:gap-16">
                         <div className="flex items-center justify-center">
-                            <Image src="/logo/nasa-logo.svg" alt="NASA" width={100} height={100} className="h-12 sm:h-14 md:h-16 w-auto object-contain" />
+                            <Image src="/logo/nasa-logo.svg" alt="NASA" width={100} height={100} className="h-10 sm:h-12 md:h-14 lg:h-16 w-auto object-contain" />
                         </div>
                         <div className="flex items-center justify-center">
-                            <Image src="/logo/ustc.png" alt="USTC" width={100} height={100} className="h-12 sm:h-14 md:h-16 w-auto object-contain" />
+                            <Image src="/logo/ustc.png" alt="USTC" width={100} height={100} className="h-10 sm:h-12 md:h-14 lg:h-16 w-auto object-contain" />
                         </div>
                         <div className="flex items-center justify-center">
-                            <Image src="/logo/airforce.png" alt="Air Force" width={100} height={100} className="h-12 sm:h-14 md:h-16 w-auto object-contain" />
+                            <Image src="/logo/airforce.png" alt="Air Force" width={100} height={100} className="h-10 sm:h-12 md:h-14 lg:h-16 w-auto object-contain" />
                         </div>
                         <div className="flex items-center justify-center">
-                            <Image src="/logo/africacom.png" alt="Air Force" width={100} height={100} className="h-12 sm:h-14 md:h-16 w-auto object-contain" />
+                            <Image src="/logo/africacom.png" alt="Africa Command" width={100} height={100} className="h-10 sm:h-12 md:h-14 lg:h-16 w-auto object-contain" />
                         </div>
-                        <div className="flex items-center justify-center">
-                            <Image src="/logo/mda.png" alt="MDA" width={100} height={100} className="h-12 sm:h-14 md:h-16 w-auto object-contain" />
+                        <div className="flex items-center justify-center col-span-2 sm:col-span-1">
+                            <Image src="/logo/mda.png" alt="MDA" width={100} height={100} className="h-10 sm:h-12 md:h-14 lg:h-16 w-auto object-contain" />
                         </div>
                     </div>
                 </div>
